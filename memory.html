@@ -226,7 +226,7 @@ window.mobileCheck = function() {
 	}
 	
 	function updateCurrentGuess() {
-		setElementText("#random-number", currentGuess+"_ isMobile = " + isMobile);
+		setElementText("#random-number", currentGuess+"_ isMobile = " + isMobile());
 	}
 
 	function setupEventListeners() {
