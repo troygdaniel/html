@@ -1,0 +1,250 @@
+<html><body>
+	<span id="random-number" style="font-size: 240px;">...</span>
+	<br/><br/><br/>
+	<hr>
+	<span id="current-time" style="font-size: 142px;"></span>
+	<span id="happy-user-msg" style="font-size: 142px;color: green;">Get ready...</span>
+	<span id="sad-user-msg" style="font-size: 142px;color: red;"></span>
+	<br/>
+	<span id="best-time" style="font-size: 142px;"></span> <span id="avg-time" style="font-size: 142px;"></span>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script>
+	var now = new Date();
+	var startTime = new Date();
+	var bestTime = -1;  	
+	var averageTime = 0;
+	var totalDigits = 2; // number of digits to generate random number
+	var totalElaspedSeconds;
+	var gameElapsedSeconds;
+	var randomNumber;
+	var currentGuess = "";
+	var MEMORIZING_TIME = 1; // time the number is left on the screen (in seconds)
+	var memoryArtifacts = [
+		"Suzanne Sommers", // 0
+		"Stick", // 1
+		"Poop", // 2
+		"Comb", // 3
+		"Airplane", // 4
+		"Hand", // 5
+		"Violet", // 6
+		"Bond", // 7
+		"Octopus", // 8
+		"White cat", // 9
+		"Sebbie", // 10
+		"Goal posts", // 11
+		"Sun", // 12
+		"Black cat", // 13
+		"Ski-doo", // 14
+		"INXS", // 15
+		"License", // 16
+		"Clover", // 17
+		"Car", // 18
+		"Sled", // 19
+		"Binoculars", // 20
+		"Depp", // 21
+		"Ducklins", // 22
+		"Hamlet", // 23
+		"Kiefer", // 24
+		"Xmas", // 25
+		"Box", // 26
+		"Toast to Seven!", // 27
+		"Road Runner", // 28
+		"Frog", // 29
+		"Bo (Dukes)", // 30
+		"New years ball ", // 31
+		"Amelia Earhart", // 32
+		"BB King", // 33
+		"Rule 34", // 34
+		"Obama", // 35
+		"Compass", // 36
+		"Too many cooks", // 37
+		"Gun .38", // 38
+		"Baby w/bottle", // 39
+		"40 oz bottle", // 40
+		"Sting", // 41
+		"Life", // 42
+		"Dad", // 43
+		"Mom", // 44
+		"War vet", // 45
+		"GoT", // 46
+		"AK 47", // 47
+		"Nolte", // 48
+		"Football player", // 49
+		"50 cent rapper", // 50
+		"Alien", // 51
+		"Deck of cards", // 52
+		"Joker", // 53
+		"Rocket", // 54
+		"Gilligan", // 55
+		"Rubiks cube", // 56
+		"Ketchup", // 57
+		"Harrison", // 58
+		"Rosary", // 59
+		"Watch", // 60
+		"Heather G", // 61
+		"Cuban cigar", // 62
+		"Pawn", // 63
+		"Chess board", // 64
+		"Golden girl", // 65
+		"Devil", // 66
+		"<gasp> w/Seven", // 67
+		"Gail", // 68
+		"<gasp>", // 69
+		"Hockey player", // 70
+		"Iron board", // 71
+		"Trina", // 72
+		"Sheldon", // 73
+		"Troy", // 74
+		"AnnMarie", // 75
+		"Mars landing", // 76
+		"God", // 77
+		"Superman", // 78
+		"Smashing Pumpkins", // 79
+		"Ski googles", // 80
+		"Hells angels", // 81
+		"Sha", // 82
+		"Jedi", // 83
+		"Book", // 84
+		"Next", // 85
+		"Challenger", // 86
+		"Glasses", // 87
+		"Piano", // 88
+		"Batman", // 89 
+		"Hubble", // 90
+		"Mikhal G", // 91
+		"Baseball player", // 92
+		"Rhonda", // 93
+		"OJ", // 94
+		"Briefcase", // 95
+		"Discus", // 96
+		"Guru/Ramana", // 97
+		"Google", // 98 
+		"Ballons" // 99
+	];
+	init();
+
+	function init() {
+  		getNewRandomNumber();
+		setupElapsedTimer();
+		setupEventListeners()
+	}
+
+	function setupElapsedTimer() {
+		// Update the elapsed counter every 100ms
+		setInterval(function () {
+			// calc the current elapsed time
+			var totalElaspedSeconds = (now-startTime)/1000;
+			if (totalElaspedSeconds < 0 ) totalElaspedSeconds = 0;
+
+			// Update the elasped time
+			now = new Date();
+
+			if (totalElaspedSeconds > MEMORIZING_TIME) {
+				// display the elapsed seconds
+				gameElapsedSeconds = totalElaspedSeconds - MEMORIZING_TIME;
+				gameElapsedSeconds = gameElapsedSeconds.toFixed(1);
+				$("#current-time").text((gameElapsedSeconds + "s "));
+				$("#random-number").text(currentGuess+"_");
+				$("#happy-user-msg").text("");
+				$("#sad-user-msg").text("");
+			} 
+		}, 100);		
+	}
+	
+	function captureBestTime() {
+		if (bestTime == -1) { 
+			bestTime = gameElapsedSeconds;
+		} else if (gameElapsedSeconds < bestTime )  {
+			bestTime = gameElapsedSeconds;
+		}
+		
+		$("#best-time").text("Best - " + bestTime + "s");
+		//$("#avg-time").text("Avg - " + bestTime + "s");
+		$("#current-time").text("");
+	}
+	
+	function resetBestTime() {
+		bestTime == -1;
+	}
+
+	function resetElapsedTimer() {
+		startTime = new Date();
+		$("#time").text("Memorize...");
+	}
+	
+	function updateCurrentGuess() {
+		$("#random-number").text(currentGuess+"_");
+	}
+
+
+	function setupEventListeners() {
+		$('body').keyup(function(e){
+			
+			console.log(e.keyCode);
+			captureGuess(e.keyCode);			
+			captureEnterEvent(e.keyCode);
+			captureEditingEvents(e.keyCode);
+		});
+	}
+	function captureGuess(keyCode) {
+		var _char = String.fromCharCode(keyCode);
+		// Capture the current guess from keystrokes 
+		if (keyCode > 47 && keyCode < 58) {
+			currentGuess = currentGuess+_char;
+			updateCurrentGuess()
+		}		
+	}
+	function captureEditingEvents(keyCode) {
+		// "+" key event
+		if(keyCode == 187){
+			totalDigits = totalDigits + 1;
+			getNewRandomNumber();
+			resetBestTime();
+		}
+		// "-" key event
+		if(keyCode == 189){
+			totalDigits = totalDigits - 1;
+			if (totalDigits <= 2) totalDigits = 2;
+			getNewRandomNumber();
+			resetBestTime();
+		}
+		// Backspace - reset
+		if(keyCode == 8){
+			console.log("pressed backspace")
+			currentGuess = "";
+			updateCurrentGuess()
+		}
+		if(keyCode == 32){
+			getNewRandomNumber();
+		}		
+	}
+	function captureEnterEvent(keyCode) {
+		if(keyCode == 13 ){
+			$("#current-time").text("");
+			// did they guess correct?
+		   if (currentGuess == randomNumber) {
+				captureBestTime();
+				if (totalDigits === 2) $("#happy-user-msg").text("" + memoryArtifacts[randomNumber]);
+				getNewRandomNumber();
+		   } else {
+			currentGuess = "";
+				getNewRandomNumber();
+				$("#sad-user-msg").text("Incorrect");
+		   }
+		}
+	}
+	function getTotalDigits() {
+		return Math.pow(10,totalDigits);
+	}
+	function getNewRandomNumber() {
+		resetElapsedTimer();		
+		randomNumber  = parseInt((Math.random()*getTotalDigits()));
+		$("#random-number").text(">"+randomNumber);
+		
+		currentGuess = "";
+		return randomNumber;
+	}
+</script>
