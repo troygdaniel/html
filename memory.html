@@ -226,7 +226,11 @@ function mobileCheck() {
 	}
 	
 	function updateCurrentGuess() {
-		setElementText("#random-number", currentGuess+"_ mobileCheck = " + mobileCheck());
+		if (mobileCheck() === true ) { 
+			setElementText("#random-number", currentGuess+"____");
+		} else {
+			setElementText("#random-number", currentGuess+"_");
+		}
 	}
 
 	function setupEventListeners() {
