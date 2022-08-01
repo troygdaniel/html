@@ -1,11 +1,12 @@
 <html><body>
 	<span id="random-number" style="font-size: 240px;">...</span>
+	<span id="mobile-random-number" style="font-size: 340px;">...</span>
 	<br/><br/><br/>
 	<hr>
 	<span id="current-time" style="font-size: 142px;"></span>
 	<span id="happy-user-msg" style="font-size: 142px;color: green;">Get ready...</span>
-	<span id="sad-user-msg" style="font-size: 142px;color: red;"></span>
-	<br/>
+	<span id="mobile-happy-user-msg" style="font-size: 142px;color: green;">Get ready...</span>
+	<span id="sad-user-msg" style="font-size: 142px;color: red;"></span><br/>
 	<span id="best-time" style="font-size: 142px;"></span> <span id="avg-time" style="font-size: 142px;"></span>
 </body>
 </html>
@@ -165,13 +166,12 @@ function mobileCheck() {
 				gameElapsedSeconds = gameElapsedSeconds.toFixed(1);
 				setElementText("#current-time", (gameElapsedSeconds + "s "));
 				updateCurrentGuess()
-				setElementText("#happy-user-msg", "");
-				setElementText("#sad-user-msg", "");
+				setElementText("#mobile-happy-user-msg", "");
 			}
 			if (totalElaspedSeconds > (MEMORIZING_TIME + 2)) {
 				//captureBestTime();
 				setElementText("#current-time", (""));
-				setElementText("#happy-user-msg", "" + memoryArtifacts[randomNumber]);
+				setElementText("#mobile-happy-user-msg", "" + memoryArtifacts[randomNumber]);
 				getNewRandomNumber();				
 			}
 		}, 100);		
@@ -214,7 +214,6 @@ function mobileCheck() {
 		}
 		
 		setElementText("#best-time", "Best - " + bestTime + "s");
-		setElementText("#avg-time", "Avg - " + bestTime + "s");
 		setElementText("#current-time", "");
 	}
 	
@@ -229,7 +228,7 @@ function mobileCheck() {
 	
 	function updateCurrentGuess() {
 		if (mobileCheck() === true ) { 
-			setElementText("#random-number", currentGuess+"____");
+			setElementText("#mobile-random-number", currentGuess+"____");
 		} else {
 			setElementText("#random-number", currentGuess+"_");
 		}
