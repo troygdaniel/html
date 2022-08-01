@@ -130,6 +130,7 @@ window.mobileCheck = function() {
 		"Ballons" // 99
 	];
 	
+	console.log("mobileCheck = " + mobileCheck);
 	if (mobileCheck === false) {
 		init();
 	} else {
@@ -163,7 +164,7 @@ window.mobileCheck = function() {
 				gameElapsedSeconds = totalElaspedSeconds - MEMORIZING_TIME;
 				gameElapsedSeconds = gameElapsedSeconds.toFixed(1);
 				setElementText("#current-time", (gameElapsedSeconds + "s "));
-				setElementText("#random-number", currentGuess+"_isMobile = " + isMobile);
+				updateCurrentGuess()
 				setElementText("#happy-user-msg", "");
 				setElementText("#sad-user-msg", "");
 			} else if (totalElaspedSeconds > (MEMORIZING_TIME + 1.5)) {
@@ -189,7 +190,7 @@ window.mobileCheck = function() {
 				gameElapsedSeconds = totalElaspedSeconds - MEMORIZING_TIME;
 				gameElapsedSeconds = gameElapsedSeconds.toFixed(1);
 				setElementText("#current-time", (gameElapsedSeconds + "s "));
-				setElementText("#random-number", currentGuess+"_ isNotMobile = "+isMobile);
+				updateCurrentGuess()
 				setElementText("#happy-user-msg", "");
 				setElementText("#sad-user-msg", "");
 			} 
@@ -199,7 +200,6 @@ window.mobileCheck = function() {
 		var _dom = document.querySelector(_elementId);
 		
 		if (_dom != null)  {
-			//console.log("updating " + _elementId + " with  " + _txt);
 			document.querySelector(_elementId).textContent = _txt;
 		}
 
@@ -226,7 +226,7 @@ window.mobileCheck = function() {
 	}
 	
 	function updateCurrentGuess() {
-		setElementText("#random-number", currentGuess+"_");
+		setElementText("#random-number", currentGuess+"_ isMobile = " + isMobile);
 	}
 
 	function setupEventListeners() {
