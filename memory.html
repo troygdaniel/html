@@ -146,14 +146,22 @@
 				// display the elapsed seconds
 				gameElapsedSeconds = totalElaspedSeconds - MEMORIZING_TIME;
 				gameElapsedSeconds = gameElapsedSeconds.toFixed(1);
-				$("#current-time").text((gameElapsedSeconds + "s "));
-				$("#random-number").text(currentGuess+"_");
-				$("#happy-user-msg").text("");
-				$("#sad-user-msg").text("");
+				setElementText("#current-time", (gameElapsedSeconds + "s "));
+				setElementText("#random-number", currentGuess+"_");
+				setElementText("#happy-user-msg", "");
+				setElementText("#sad-user-msg", "");
 			} 
 		}, 100);		
 	}
-	
+	function setElementText(_elementId, _txt) {
+		var _dom = document.querySelector(_elementId);
+		
+		if (_dom != null)  {
+			//console.log("updating " + _elementId + " with  " + _txt);
+			document.querySelector(_elementId).textContent = _txt;
+		}
+
+	}
 	function captureBestTime() {
 		if (bestTime == -1) { 
 			bestTime = gameElapsedSeconds;
@@ -161,9 +169,9 @@
 			bestTime = gameElapsedSeconds;
 		}
 		
-		$("#best-time").text("Best - " + bestTime + "s");
-		//$("#avg-time").text("Avg - " + bestTime + "s");
-		$("#current-time").text("");
+		setElementText("#best-time", "Best - " + bestTime + "s");
+		setElementText("#avg-time", "Avg - " + bestTime + "s");
+		setElementText("#current-time", "");
 	}
 	
 	function resetBestTime() {
@@ -172,11 +180,11 @@
 
 	function resetElapsedTimer() {
 		startTime = new Date();
-		$("#time").text("Memorize...");
+		setElementText("#time", "..");
 	}
 	
 	function updateCurrentGuess() {
-		$("#random-number").text(currentGuess+"_");
+		setElementText("#random-number", currentGuess+"_");
 	}
 
 
@@ -223,16 +231,16 @@
 	}
 	function captureEnterEvent(keyCode) {
 		if(keyCode == 13 ){
-			$("#current-time").text("");
+			setElementText("#current-time", "");
 			// did they guess correct?
 		   if (currentGuess == randomNumber) {
 				captureBestTime();
-				if (totalDigits === 2) $("#happy-user-msg").text("" + memoryArtifacts[randomNumber]);
+				setElementText("#happy-user-msg", "" + memoryArtifacts[randomNumber]);
 				getNewRandomNumber();
 		   } else {
 			currentGuess = "";
 				getNewRandomNumber();
-				$("#sad-user-msg").text("Incorrect");
+				setElementText("#sad-user-msg", "Incorrect");
 		   }
 		}
 	}
@@ -242,7 +250,7 @@
 	function getNewRandomNumber() {
 		resetElapsedTimer();		
 		randomNumber  = parseInt((Math.random()*getTotalDigits()));
-		$("#random-number").text(">"+randomNumber);
+		setElementText("#random-number", ">"+randomNumber);
 		
 		currentGuess = "";
 		return randomNumber;
