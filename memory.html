@@ -163,7 +163,7 @@ window.mobileCheck = function() {
 				gameElapsedSeconds = totalElaspedSeconds - MEMORIZING_TIME;
 				gameElapsedSeconds = gameElapsedSeconds.toFixed(1);
 				setElementText("#current-time", (gameElapsedSeconds + "s "));
-				setElementText("#random-number", currentGuess+"_");
+				setElementText("#random-number", currentGuess+"_isMobile = " + isMobile);
 				setElementText("#happy-user-msg", "");
 				setElementText("#sad-user-msg", "");
 			} else if (totalElaspedSeconds > (MEMORIZING_TIME + 1.5)) {
