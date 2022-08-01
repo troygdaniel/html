@@ -131,7 +131,7 @@ window.mobileCheck = function() {
 	];
 	
 	console.log("mobileCheck = " + mobileCheck);
-	if (mobileCheck === false) {
+	if (mobileCheck() === false) {
 		init();
 	} else {
 		mobileInit()
@@ -226,7 +226,7 @@ window.mobileCheck = function() {
 	}
 	
 	function updateCurrentGuess() {
-		setElementText("#random-number", currentGuess+"_ isMobile = " + isMobile());
+		setElementText("#random-number", currentGuess+"_ mobileCheck = " + mobileCheck());
 	}
 
 	function setupEventListeners() {
