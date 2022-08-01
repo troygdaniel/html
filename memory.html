@@ -132,8 +132,8 @@ function mobileCheck() {
 	
 	console.log("mobileCheck = " + mobileCheck());
 	if (mobileCheck() === false) {
-		init();
-	} else {
+		// init();
+	// } else {
 		mobileInit()
 	}
 
@@ -167,8 +167,10 @@ function mobileCheck() {
 				updateCurrentGuess()
 				setElementText("#happy-user-msg", "");
 				setElementText("#sad-user-msg", "");
-			} else if (totalElaspedSeconds > (MEMORIZING_TIME + 1.5)) {
+			}
+			if (totalElaspedSeconds > (MEMORIZING_TIME + 2)) {
 				//captureBestTime();
+				setElementText("#current-time", (""));
 				setElementText("#happy-user-msg", "" + memoryArtifacts[randomNumber]);
 				getNewRandomNumber();				
 			}
